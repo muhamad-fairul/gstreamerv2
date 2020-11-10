@@ -20,6 +20,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 RUN apt-get -y install software-properties-common apt-utils vim htop dpkg-dev \
   openssh-server git-core wget software-properties-common
+RUN echo $(lsb_release -sc)
 RUN apt-add-repository -y "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"
 RUN apt-get update
 

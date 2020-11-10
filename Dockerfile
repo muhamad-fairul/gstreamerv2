@@ -1,7 +1,18 @@
+FROM ubuntu:18.04
 FROM ubuntu:saucy
 
 # install required packages
-RUN apt-get update
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:Intel123!' | chpasswd
+RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+ENV NOTVISIBLE="in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
 RUN apt-get -y install python-software-properties apt-utils vim htop dpkg-dev \
   openssh-server git-core wget software-properties-common
 RUN apt-add-repository -y "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"
@@ -42,3 +53,6 @@ RUN cd cerbero; ./cerbero-uninstalled build \
 
 RUN cd cerbero; ./cerbero-uninstalled build \
   gst-libav-1.0
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]

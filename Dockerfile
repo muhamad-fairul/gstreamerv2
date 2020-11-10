@@ -18,7 +18,7 @@ RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid
 ENV NOTVISIBLE="in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-RUN apt-get -y install python-software-properties apt-utils vim htop dpkg-dev \
+RUN apt-get -y install software-properties-common apt-utils vim htop dpkg-dev \
   openssh-server git-core wget software-properties-common
 RUN apt-add-repository -y "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) multiverse"
 RUN apt-get update

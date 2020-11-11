@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN apt-get install -y git build-essential libssl-dev
+RUN apt-get install -y pkg-config
 RUN apt-get install -y libusb-1.0-0-dev
 RUN g++ source.cpp `pkg-config --libs --cflags libusb-1.0`
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmake-3.16.5.tar.gz

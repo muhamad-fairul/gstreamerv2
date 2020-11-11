@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y openssh-server
 RUN apt-get install -y git build-essential libssl-dev
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmake-3.16.5.tar.gz
 RUN tar -zxvf cmake-3.16.5.tar.gz
-WORKDIR cd cmake-3.16.5 && ./bootstrap
+WORKDIR cmake-3.16.5 && 
+RUN ./bootstrap
 RUN make
 RUN make install 
 RUN mkdir /var/run/sshd

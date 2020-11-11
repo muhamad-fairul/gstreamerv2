@@ -4,9 +4,9 @@ RUN apt-get update && apt-get install -y openssh-server
 RUN apt-get install -y git build-essential libssl-dev
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmake-3.16.5.tar.gz
 RUN tar -zxvf cmake-3.16.5.tar.gz
-RUN cd cmake-3.16.5 && ./bootstrap \
-                        make \ 
-                        make install 
+WORKDIR cd cmake-3.16.5 && ./bootstrap
+RUN make
+RUN make install 
 RUN mkdir /var/run/sshd
 RUN echo 'root:Intel123!' | chpasswd
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
